@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+# c is for console, that's good enough for me
+
+ENV["BUNDLE_GEMFILE"] = File.join(__dir__, '../Gemfile')
+
+require 'bundler'
+Bundler.setup
+require 'jsi_util_linux/jul'
+
+require "irb"
+IRB.start(__FILE__)
