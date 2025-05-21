@@ -19,4 +19,6 @@ Gem::Specification.new do |spec|
   ].reject { |f| File.lstat(f).ftype == 'directory' }
 
   spec.require_paths = ["lib"]
+
+  spec.add_dependency("jsi", "~> 0.8")
 end
