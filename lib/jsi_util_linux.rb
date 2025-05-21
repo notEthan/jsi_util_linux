@@ -5,6 +5,31 @@ require 'jsi'
 require 'shellwords'
 
 module JSIUtilLinux
+  autoload(:FindMnt, 'jsi_util_linux/findmnt')
+  autoload(:Filesystem, 'jsi_util_linux/findmnt')
+  autoload(:LoSetup, 'jsi_util_linux/losetup')
+  autoload(:LoopDev, 'jsi_util_linux/losetup')
+  autoload(:LsBlk, 'jsi_util_linux/lsblk')
+  autoload(:BlockDev, 'jsi_util_linux/lsblk')
+
+  # Invokes [`findmnt`](https://linux.die.net/man/8/findmnt). Method arguments become CLI arguments via {args_to_argv}.
+  # @return [FindMnt]
+  def self.findmnt(*args, **kwargs)
+    system_jsi(FindMnt, 'findmnt', args, kwargs)
+  end
+
+  # Invokes [`losetup`](https://linux.die.net/man/8/losetup). Method arguments become CLI arguments via {args_to_argv}.
+  # @return [LoSetup]
+  def self.losetup(*args, **kwargs)
+    system_jsi(LoSetup, 'losetup', args, kwargs)
+  end
+
+  # Invokes [`lsblk`](https://linux.die.net/man/8/lsblk). Method arguments become CLI arguments via {args_to_argv}.
+  # @return [LsBlk]
+  def self.lsblk(*args, **kwargs)
+    system_jsi(LsBlk, 'lsblk', args, kwargs)
+  end
+
   # Transforms arguments, taking what is convenient to write in Ruby and returning what will be passed as `argv` to a CLI utility.
   #
   # String arguments go into argv as-is.
