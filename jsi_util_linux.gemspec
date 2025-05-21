@@ -4,7 +4,7 @@ require_relative "lib/jsi_util_linux/version"
 
 Gem::Specification.new do |spec|
   spec.name = "jsi_util_linux"
-  spec.version = JsiUtilLinux::VERSION
+  spec.version = JSIUtilLinux::VERSION
   spec.authors = ["Ethan"]
   spec.email = ["ethan@unth.net"]
 
