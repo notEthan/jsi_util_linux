@@ -162,6 +162,8 @@ module JSIUtilLinux
 
 
   module LsBlk
+    EMPTY_CONTENT = {"blockdevices" => [].freeze}.freeze
+
     # @yield [BlockDev]
     # @return [Enumerator, nil]
     def each_blockdev

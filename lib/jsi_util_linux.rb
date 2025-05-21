@@ -15,19 +15,19 @@ module JSIUtilLinux
   # Invokes [`findmnt`](https://linux.die.net/man/8/findmnt). Method arguments become CLI arguments via {args_to_argv}.
   # @return [FindMnt]
   def self.findmnt(*args, **kwargs)
-    system_jsi(FindMnt, 'findmnt', args, kwargs)
+    system_jsi(FindMnt, 'findmnt', args, kwargs, empty: FindMnt::EMPTY_CONTENT)
   end
 
   # Invokes [`losetup`](https://linux.die.net/man/8/losetup). Method arguments become CLI arguments via {args_to_argv}.
   # @return [LoSetup]
   def self.losetup(*args, **kwargs)
-    system_jsi(LoSetup, 'losetup', args, kwargs)
+    system_jsi(LoSetup, 'losetup', args, kwargs, empty: LoSetup::EMPTY_CONTENT)
   end
 
   # Invokes [`lsblk`](https://linux.die.net/man/8/lsblk). Method arguments become CLI arguments via {args_to_argv}.
   # @return [LsBlk]
   def self.lsblk(*args, **kwargs)
-    system_jsi(LsBlk, 'lsblk', args, kwargs)
+    system_jsi(LsBlk, 'lsblk', args, kwargs, empty: LsBlk::EMPTY_CONTENT)
   end
 
   # Transforms arguments, taking what is convenient to write in Ruby and returning what will be passed as `argv` to a CLI utility.
@@ -64,12 +64,13 @@ module JSIUtilLinux
   end
 
   # @private
-  def self.system_jsi(schema, util, args, kwargs)
+  def self.system_jsi(schema, util, args, kwargs, empty: nil)
     argv = args_to_argv('--json', *args, **kwargs)
     # TODO probably better to use an open3 method
     cmd = "#{util} #{argv.map { |a| Shellwords.escape(a) }.join(' ')}"
     json = Kernel.send(:`, cmd)
     raise("#{util} exited #{$?.exitstatus}\ncmd: #{cmd}\noutput: #{json}") unless $?.exitstatus == 0
-    schema.new_jsi(JSON.parse(json))
+    content = json.empty? ? empty.nil? ? raise("empty output from cmd: #{cmd}") : empty : JSON.parse(json)
+    schema.new_jsi(content)
   end
 end

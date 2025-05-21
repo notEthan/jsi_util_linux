@@ -100,6 +100,8 @@ module JSIUtilLinux
   Filesystem = FindMnt.definitions['filesystem']
 
   module FindMnt
+    EMPTY_CONTENT = {"filesystems" => [].freeze}.freeze
+
     # @yield [Filesystem]
     # @return [Enumerator, nil]
     def each_filesystem(&block)

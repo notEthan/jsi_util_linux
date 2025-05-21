@@ -57,6 +57,7 @@ module JSIUtilLinux
 
 
   module LoSetup
+    EMPTY_CONTENT = {"loopdevices" => [].freeze}.freeze
   end
 
   module LoopDev
