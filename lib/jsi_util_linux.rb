@@ -73,7 +73,11 @@ module JSIUtilLinux
     cmd = "#{util} #{argv.map { |a| Shellwords.escape(a) }.join(' ')}"
     json = Kernel.send(:`, cmd)
     raise("#{util} exited #{$?.exitstatus}\ncmd: #{cmd}\noutput: #{json}") unless $?.exitstatus == 0
-    content = json.empty? ? empty.nil? ? raise("empty output from cmd: #{cmd}") : empty : JSON.parse(json)
+    content = json.empty? ? empty.nil? ? raise("empty output from command: #{cmd}") : empty : begin
+      JSON.parse(json)
+    rescue JSON::ParserError => e
+      raise("command did not output JSON.\ncommand: #{cmd}\noutput: #{json}\n#{e.class}: #{e.message}")
+    end
     schema.new_jsi(content)
   end
 end
