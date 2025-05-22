@@ -7,7 +7,7 @@ require 'shellwords'
 module JSIUtilLinux
   autoload(:FindMnt, 'jsi_util_linux/findmnt')
   autoload(:Filesystem, 'jsi_util_linux/findmnt')
-  autoload(:LoSetup, 'jsi_util_linux/losetup')
+  autoload(:LoSetupList, 'jsi_util_linux/losetup')
   autoload(:LoopDev, 'jsi_util_linux/losetup')
   autoload(:LsBlk, 'jsi_util_linux/lsblk')
   autoload(:BlockDev, 'jsi_util_linux/lsblk')
@@ -18,10 +18,13 @@ module JSIUtilLinux
     system_jsi(FindMnt, 'findmnt', args, kwargs, empty: FindMnt::EMPTY_CONTENT)
   end
 
-  # Invokes [`losetup`](https://linux.die.net/man/8/losetup). Method arguments become CLI arguments via {args_to_argv}.
-  # @return [LoSetup]
-  def self.losetup(*args, **kwargs)
-    system_jsi(LoSetup, 'losetup', args, kwargs, empty: LoSetup::EMPTY_CONTENT)
+  # Invokes [`losetup --list`](https://linux.die.net/man/8/losetup). Method arguments become CLI arguments via {args_to_argv}.
+  #
+  # Other modes of `losetup` than `--list` are not supported.
+  #
+  # @return [LoSetupList]
+  def self.losetup_ls(*args, **kwargs)
+    system_jsi(LoSetupList, 'losetup', ['--list', *args], kwargs, empty: LoSetupList::EMPTY_CONTENT)
   end
 
   # Invokes [`lsblk`](https://linux.die.net/man/8/lsblk). Method arguments become CLI arguments via {args_to_argv}.

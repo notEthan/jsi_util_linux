@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 module JSIUtilLinux
-  losetup_schema_content = JSI::Util.deep_stringify_symbol_keys({
+  losetup_list_schema_content = JSI::Util.deep_stringify_symbol_keys({
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
@@ -47,16 +47,16 @@ module JSIUtilLinux
   }
 
   losetup_help_outputs.each do |k, v|
-    lp = losetup_schema_content['definitions']['loopdevice']['properties'][k.downcase] || raise(k)
+    lp = losetup_list_schema_content['definitions']['loopdevice']['properties'][k.downcase] || raise(k)
     lp['description'] = v
   end
 
 
-  LoSetup = JSI.new_schema_module(losetup_schema_content)
-  LoopDev = LoSetup.definitions['loopdevice']
+  LoSetupList = JSI.new_schema_module(losetup_list_schema_content)
+  LoopDev = LoSetupList.definitions['loopdevice']
 
 
-  module LoSetup
+  module LoSetupList
     EMPTY_CONTENT = {"loopdevices" => [].freeze}.freeze
   end
 

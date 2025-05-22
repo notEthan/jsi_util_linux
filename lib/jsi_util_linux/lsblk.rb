@@ -198,7 +198,7 @@ module JSIUtilLinux
 
     # @return [LoopDev, nil]
     def loopdev
-      JSIUtilLinux.losetup.loopdevices.detect do |ld|
+      JSIUtilLinux.losetup_ls.loopdevices.detect do |ld|
         ld.name == path
       end
     end
