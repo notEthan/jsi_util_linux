@@ -198,9 +198,7 @@ module JSIUtilLinux
 
     # @return [LoopDev, nil]
     def loopdev
-      JSIUtilLinux.losetup_ls.loopdevices.detect do |ld|
-        ld.name == path
-      end
+      JSIUtilLinux.losetup_ls(path || raise("missing 'path' in #{inspect}")).loopdevices.first
     end
 
     # if this blockdevice is a loopdevice, and the backing file of that loopdevice is a blockdevice, returns that blockdevice
