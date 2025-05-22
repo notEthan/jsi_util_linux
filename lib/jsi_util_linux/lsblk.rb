@@ -196,18 +196,14 @@ module JSIUtilLinux
       jsi_parent_nodes.detect { |n| n.is_a?(BlockDev) }
     end
 
-    # @return [LoSetup]
-    def losetup
-      @losetup ||= JSIUtilLinux.losetup
-    end
-
     # @return [LoopDev, nil]
     def loopdev
-      losetup.loopdevices.detect do |ld|
+      JSIUtilLinux.losetup.loopdevices.detect do |ld|
         ld.name == path
       end
     end
 
+    # if this blockdevice is a loopdevice, and the backing file of that loopdevice is a blockdevice, returns that blockdevice
     # @return [BlockDev, nil]
     def loop_backing_blockdev
       loopdev = self.loopdev
