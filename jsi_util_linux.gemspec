@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.files = [
     'LICENSE.txt',
     'README.md',
+    '.yardopts',
     File.basename(__FILE__),
     *Dir['lib/**/*'],
   ].reject { |f| File.lstat(f).ftype == 'directory' }
