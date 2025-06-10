@@ -18,6 +18,12 @@ module JSIUtilLinux
     system_jsi(FindMnt, 'findmnt', args, kwargs, empty: FindMnt::EMPTY_CONTENT)
   end
 
+  # invokes {findmnt} and returns the resulting filesystems
+  # @return [Array<Filesystem>]
+  def self.filesystems(*args, **kwargs)
+    findmnt(*args, **kwargs).filesystems
+  end
+
   # Invokes [`losetup --list`](https://linux.die.net/man/8/losetup). Method arguments become CLI arguments via {args_to_argv}.
   #
   # Other modes of `losetup` than `--list` are not supported.
@@ -27,10 +33,22 @@ module JSIUtilLinux
     system_jsi(LoSetupList, 'losetup', ['--list', *args], kwargs, empty: LoSetupList::EMPTY_CONTENT)
   end
 
+  # invokes {losetup_ls} and returns the resulting loopdevices
+  # @return [Array<LoopDev>]
+  def self.loopdevices(*args, **kwargs)
+    losetup_ls(*args, **kwargs).loopdevices
+  end
+
   # Invokes [`lsblk`](https://linux.die.net/man/8/lsblk). Method arguments become CLI arguments via {args_to_argv}.
   # @return [LsBlk]
   def self.lsblk(*args, **kwargs)
     system_jsi(LsBlk, 'lsblk', args, kwargs, empty: LsBlk::EMPTY_CONTENT)
+  end
+
+  # invokes {lsblk} and returns the resulting blockdevices
+  # @return [Array<BlockDev>]
+  def self.blockdevices(*args, **kwargs)
+    lsblk(*args, **kwargs).blockdevices
   end
 
   # Transforms arguments, taking what is convenient to write in Ruby and returning what will be passed as `argv` to a CLI utility.
