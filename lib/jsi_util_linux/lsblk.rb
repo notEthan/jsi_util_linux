@@ -196,6 +196,10 @@ module JSIUtilLinux
       jsi_parent_nodes.detect { |n| n.is_a?(BlockDev) }
     end
 
+    def maj_min
+      self['maj:min']
+    end
+
     # @return [LoopDev, nil]
     def loopdev
       JSIUtilLinux.losetup_ls(path || raise("missing 'path' in #{inspect}")).loopdevices.first
