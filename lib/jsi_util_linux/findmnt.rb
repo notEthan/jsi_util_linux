@@ -133,6 +133,16 @@ module JSIUtilLinux
       Integer(dev_re_match[2])
     end
 
+    # @return [Pathname]
+    def mount_pathname
+      Pathname.new(target)
+    end
+
+    # @return [File::Stat]
+    def mount_stat
+      File.lstat(target)
+    end
+
     # @yield [Filesystem]
     # @return [Enumerator, nil]
     def each_filesystem(&block)
